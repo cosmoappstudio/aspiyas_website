@@ -1,0 +1,93 @@
+/* Hero section - Terminal design background */
+.terminal-hero-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding-top: 5rem;
+  padding-bottom: 4rem;
+}
+
+.terminal-hero-section__bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: #0d0f14;
+}
+
+.terminal-hero-section__grid {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(0, 229, 160, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 229, 160, 0.025) 1px, transparent 1px);
+  background-size: 44px 44px;
+  pointer-events: none;
+}
+
+.terminal-hero-section__glow {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  height: 500px;
+  z-index: 0;
+  background: radial-gradient(
+    ellipse,
+    rgba(0, 229, 160, 0.055) 0%,
+    rgba(0, 184, 255, 0.03) 45%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.terminal-hero-section__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 0 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.terminal-hero-section__description {
+  color: #dde1ec;
+  font-size: 1rem;
+  line-height: 1.6;
+  text-align: center;
+  max-width: 36rem;
+  opacity: 0.85;
+}
+
+.terminal-hero-section__cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+@media (min-width: 640px) {
+  .terminal-hero-section__cta {
+    flex-direction: row;
+  }
+}
+
+.terminal-hero-section__scroll {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 1;
+}

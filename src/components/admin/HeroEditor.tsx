@@ -103,8 +103,8 @@ export function HeroEditor() {
 
       <CollapsibleSection title="Badge & Başlık" defaultOpen={true}>
         <Field label="Badge metni"><input className={inputCls} value={c.badge} onChange={e => update('badge', e.target.value)} /></Field>
-        <Field label="Başlık satır 1"><input className={inputCls} value={c.titleLine1} onChange={e => update('titleLine1', e.target.value)} /></Field>
-        <Field label="Başlık satır 2"><input className={inputCls} value={c.titleLine2} onChange={e => update('titleLine2', e.target.value)} /></Field>
+        <Field label="Prompt (soru) — örn: Aspiyas?"><input className={inputCls} value={c.titleLine1} onChange={e => update('titleLine1', e.target.value)} placeholder="Aspiyas?" /></Field>
+        <Field label="Yanıt (AI cevabı) — örn: Teknoloji Odaklı Yaratıcı Çözümler"><input className={inputCls} value={c.titleLine2} onChange={e => update('titleLine2', e.target.value)} placeholder="Teknoloji Odaklı Yaratıcı Çözümler" /></Field>
       </CollapsibleSection>
 
       <CollapsibleSection title="Açıklama" defaultOpen={true}>

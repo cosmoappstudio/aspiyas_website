@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, type ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LayoutDashboard, FileText, Settings, LogOut, Plus, Trash2, Edit, X, Globe, MessageSquare, ExternalLink, Briefcase, Home, Mail } from 'lucide-react';
+import { LayoutDashboard, FileText, Settings, LogOut, Plus, Trash2, Edit, X, Globe, MessageSquare, ExternalLink, Briefcase, Home, Mail, HelpCircle } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { ValuesEditor } from '../components/admin/ValuesEditor';
 import { ServicesEditor } from '../components/admin/ServicesEditor';
@@ -13,6 +13,7 @@ import { ServicesPageEditor } from '../components/admin/ServicesPageEditor';
 import { ServicePageEditor } from '../components/admin/ServicePageEditor';
 import { HeroEditor } from '../components/admin/HeroEditor';
 import { ContactPageEditor } from '../components/admin/ContactPageEditor';
+import { FaqEditor } from '../components/admin/FaqEditor';
 
 export default function Admin() {
   const [activeTab, setActiveTab] = useState('pages');
@@ -51,6 +52,7 @@ export default function Admin() {
           <SidebarItem icon={<Briefcase size={20} />} label="Dijital Pazarlama" active={activeTab === 'dijital-pazarlama'} onClick={() => setActiveTab('dijital-pazarlama')} />
           <SidebarItem icon={<Globe size={20} />} label="Genel Ayarlar" active={activeTab === 'site'} onClick={() => setActiveTab('site')} />
           <SidebarItem icon={<Mail size={20} />} label="İletişim Sayfası" active={activeTab === 'contact-page'} onClick={() => setActiveTab('contact-page')} />
+          <SidebarItem icon={<HelpCircle size={20} />} label="SSS (FAQ)" active={activeTab === 'faq'} onClick={() => setActiveTab('faq')} />
           <SidebarItem icon={<MessageSquare size={20} />} label="İletişim Talepleri" active={activeTab === 'contact'} onClick={() => setActiveTab('contact')} />
           <SidebarItem icon={<Settings size={20} />} label="Ayarlar" active={activeTab === 'settings'} onClick={() => setActiveTab('settings')} />
         </nav>
@@ -79,6 +81,12 @@ export default function Admin() {
         {activeTab === 'dijital-pazarlama' && <ServicePageEditor slug="dijital-pazarlama" title="Dijital Pazarlama" />}
         {activeTab === 'site' && <SiteSettingsManager />}
         {activeTab === 'contact-page' && <ContactPageEditor />}
+        {activeTab === 'faq' && (
+          <div>
+            <h2 className="text-2xl font-bold mb-8">Sıkça Sorulan Sorular</h2>
+            <FaqEditor />
+          </div>
+        )}
         {activeTab === 'contact' && <ContactSubmissionsManager />}
         {activeTab === 'settings' && <SettingsManager />}
       </main>
@@ -399,7 +407,7 @@ function SiteSettingsManager() {
 
       <CollapsibleSection title="Logo" defaultOpen={true}>
         <ImageField label="Logo görseli" value={settings.logo_url || ''} onChange={v => setSettings({...settings, logo_url: v})} recommendedSize="200×60" />
-        <p className="text-xs text-white/50 mt-2">Boş bırakırsanız metin logosu kullanılır.</p>
+        <p className="text-xs text-white/50 mt-2">Logo yüklenecek; boş bırakırsanız placeholder görünür.</p>
       </CollapsibleSection>
 
       <CollapsibleSection title="İletişim" defaultOpen={true}>

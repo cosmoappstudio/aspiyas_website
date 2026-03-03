@@ -5,7 +5,7 @@ import { ValuesSection } from '../components/home/ValuesSection';
 import { ServicesSection } from '../components/home/ServicesSection';
 import { VenturesSection } from '../components/home/VenturesSection';
 import { RecentBlogsSection } from '../components/home/RecentBlogsSection';
-import { ContactCtaSection } from '../components/home/ContactCtaSection';
+import { FaqSection } from '../components/home/FaqSection';
 
 export default function Home() {
   return (
@@ -15,7 +15,7 @@ export default function Home() {
       <ServicesSection />
       <VenturesSection />
       <RecentBlogsSection />
-      <ContactCtaSection />
+      <FaqSection />
     </Layout>
   );
 }

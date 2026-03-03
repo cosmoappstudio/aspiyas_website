@@ -20,7 +20,6 @@ import { supabase } from './lib/supabase';
 import { GtmLoader } from './components/GtmLoader';
 import { DocumentHead } from './components/DocumentHead';
 import { LanguageProvider } from './contexts/LanguageContext';
-
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<boolean | null>(null);
 
@@ -41,50 +40,56 @@ function RedirectToLang() {
   return <Navigate to={`/${lang}`} replace />;
 }
 
+function AppRoutes() {
+  return (
+    <Routes>
+        <Route path="/" element={<RedirectToLang />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/yonetimofisi/*" element={
+          <ProtectedRoute>
+            <Admin />
+          </ProtectedRoute>
+        } />
+        {/* Lang-prefixed routes */}
+        <Route path="/tr" element={<Home />} />
+        <Route path="/tr/about" element={<AboutPage />} />
+        <Route path="/tr/services" element={<ServicesPage />} />
+        <Route path="/tr/contact" element={<ContactPage />} />
+        <Route path="/tr/blog" element={<BlogList />} />
+        <Route path="/tr/blog/:slug" element={<BlogPost />} />
+        <Route path="/tr/shoovo" element={<ShoovoPage />} />
+        <Route path="/tr/saas-yazilim" element={<SaasYazilimPage />} />
+        <Route path="/tr/medya-produksiyon" element={<MedyaProduksiyonPage />} />
+        <Route path="/tr/ai-mobil-uygulamalar" element={<AiMobilUygulamalarPage />} />
+        <Route path="/tr/dijital-pazarlama" element={<DijitalPazarlamaPage />} />
+        <Route path="/tr/asp-agency" element={<AgencyPage />} />
+        <Route path="/tr/asp-app-studio" element={<AppStudioPage />} />
+        <Route path="/tr/:slug" element={<DynamicPage />} />
+        <Route path="/en" element={<Home />} />
+        <Route path="/en/about" element={<AboutPage />} />
+        <Route path="/en/services" element={<ServicesPage />} />
+        <Route path="/en/contact" element={<ContactPage />} />
+        <Route path="/en/blog" element={<BlogList />} />
+        <Route path="/en/blog/:slug" element={<BlogPost />} />
+        <Route path="/en/shoovo" element={<ShoovoPage />} />
+        <Route path="/en/saas-yazilim" element={<SaasYazilimPage />} />
+        <Route path="/en/medya-produksiyon" element={<MedyaProduksiyonPage />} />
+        <Route path="/en/ai-mobil-uygulamalar" element={<AiMobilUygulamalarPage />} />
+        <Route path="/en/dijital-pazarlama" element={<DijitalPazarlamaPage />} />
+        <Route path="/en/asp-agency" element={<AgencyPage />} />
+        <Route path="/en/asp-app-studio" element={<AppStudioPage />} />
+        <Route path="/en/:slug" element={<DynamicPage />} />
+      </Routes>
+  );
+}
+
 export default function App() {
   return (
     <BrowserRouter>
       <LanguageProvider>
         <GtmLoader />
         <DocumentHead />
-        <Routes>
-          <Route path="/" element={<RedirectToLang />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/yonetimofisi/*" element={
-            <ProtectedRoute>
-              <Admin />
-            </ProtectedRoute>
-          } />
-          {/* Lang-prefixed routes */}
-          <Route path="/tr" element={<Home />} />
-          <Route path="/tr/about" element={<AboutPage />} />
-          <Route path="/tr/services" element={<ServicesPage />} />
-          <Route path="/tr/contact" element={<ContactPage />} />
-          <Route path="/tr/blog" element={<BlogList />} />
-          <Route path="/tr/blog/:slug" element={<BlogPost />} />
-          <Route path="/tr/shoovo" element={<ShoovoPage />} />
-          <Route path="/tr/saas-yazilim" element={<SaasYazilimPage />} />
-          <Route path="/tr/medya-produksiyon" element={<MedyaProduksiyonPage />} />
-          <Route path="/tr/ai-mobil-uygulamalar" element={<AiMobilUygulamalarPage />} />
-          <Route path="/tr/dijital-pazarlama" element={<DijitalPazarlamaPage />} />
-          <Route path="/tr/asp-agency" element={<AgencyPage />} />
-          <Route path="/tr/asp-app-studio" element={<AppStudioPage />} />
-          <Route path="/tr/:slug" element={<DynamicPage />} />
-          <Route path="/en" element={<Home />} />
-          <Route path="/en/about" element={<AboutPage />} />
-          <Route path="/en/services" element={<ServicesPage />} />
-          <Route path="/en/contact" element={<ContactPage />} />
-          <Route path="/en/blog" element={<BlogList />} />
-          <Route path="/en/blog/:slug" element={<BlogPost />} />
-          <Route path="/en/shoovo" element={<ShoovoPage />} />
-          <Route path="/en/saas-yazilim" element={<SaasYazilimPage />} />
-          <Route path="/en/medya-produksiyon" element={<MedyaProduksiyonPage />} />
-          <Route path="/en/ai-mobil-uygulamalar" element={<AiMobilUygulamalarPage />} />
-          <Route path="/en/dijital-pazarlama" element={<DijitalPazarlamaPage />} />
-          <Route path="/en/asp-agency" element={<AgencyPage />} />
-          <Route path="/en/asp-app-studio" element={<AppStudioPage />} />
-          <Route path="/en/:slug" element={<DynamicPage />} />
-        </Routes>
+        <AppRoutes />
       </LanguageProvider>
     </BrowserRouter>
   );

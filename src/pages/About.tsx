@@ -1,4 +1,5 @@
 import { useState, useEffect, Fragment } from 'react';
+import { motion } from 'motion/react';
 import Layout from '../components/Layout';
 import Section from '../components/Section';
 import { VisualPanel } from '../components/VisualPanel';
@@ -77,7 +78,12 @@ export default function AboutPage() {
 
       <Section className="pt-32 md:pt-40 pb-20 md:pb-28">
         <div className="max-w-5xl mx-auto">
-          <header className="mb-10 md:mb-14">
+          <motion.header
+            className="mb-10 md:mb-14"
+            initial={{ opacity: 0, y: 32 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ type: 'spring', stiffness: 150, damping: 22 }}
+          >
             <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-[11px] font-semibold tracking-[0.24em] uppercase text-purple-300">
               {header.tag}
             </span>
@@ -87,15 +93,25 @@ export default function AboutPage() {
             <p className="mt-5 md:mt-6 text-sm md:text-lg text-white/60 max-w-3xl">
               {header.intro}
             </p>
-          </header>
+          </motion.header>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10 md:mb-12">
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10 md:mb-12"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15, type: 'spring', stiffness: 180, damping: 25 }}
+          >
             <AboutStat icon={Building2} label={stats[0]?.label} value={stats[0]?.value} />
             <AboutStat icon={Globe2} label={stats[1]?.label} value={stats[1]?.value} />
             <AboutStat icon={Users} label={stats[2]?.label} value={stats[2]?.value} />
-          </div>
+          </motion.div>
 
-          <div className="space-y-8 md:space-y-10">
+          <motion.div
+            className="space-y-8 md:space-y-10"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+          >
             <section aria-labelledby="about-vision" className="space-y-4 md:space-y-5">
               <h2 id="about-vision" className="text-2xl md:text-3xl font-display font-semibold">
                 {vision.title}
@@ -216,7 +232,7 @@ export default function AboutPage() {
                 <ArrowUpRight size={16} />
               </LocalizedLink>
             </div>
-          </div>
+          </motion.div>
         </div>
       </Section>
     </Layout>

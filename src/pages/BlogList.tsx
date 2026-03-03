@@ -22,23 +22,25 @@ export default function BlogList() {
 
         <div className="text-center mb-24 relative z-10">
           <motion.span 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ type: 'spring', stiffness: 200 }}
             className="text-purple-400 text-xs font-bold tracking-[0.2em] uppercase mb-4 block"
           >
             Blog & İçerik
           </motion.span>
           <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 36 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ type: 'spring', stiffness: 150, damping: 22 }}
             className="text-5xl md:text-7xl font-display font-bold mb-6"
           >
             Son Yazılar
           </motion.h1>
           <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, type: 'spring', stiffness: 150 }}
             className="text-white/50 text-xl max-w-2xl mx-auto font-light"
           >
             Teknoloji, yapay zeka ve dijital dönüşüm üzerine içgörülerimiz.
@@ -49,9 +51,9 @@ export default function BlogList() {
           {blogs.map((blog, index) => (
             <motion.div
               key={blog.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
+              initial={{ opacity: 0, y: 32, scale: 0.97 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ delay: 0.2 + index * 0.08, type: 'spring', stiffness: 180, damping: 25 }}
             >
               <LocalizedLink to={`/blog/${blog.slug}`} className="group block h-full">
                 <div className="bg-[#0A0A0A] border border-white/5 rounded-[2rem] overflow-hidden hover:border-purple-500/30 transition-all duration-500 h-full flex flex-col group-hover:translate-y-[-5px]">

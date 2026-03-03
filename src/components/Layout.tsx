@@ -80,15 +80,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             {settings.logo_url ? (
               <img src={settings.logo_url} alt="Aspiyas" className="h-10 w-auto object-contain" />
             ) : (
-              <>
-                <div className="relative w-10 h-10 flex items-center justify-center overflow-hidden rounded-xl bg-white/5 border border-white/10 group-hover:border-purple-500/50 transition-colors">
-                  <div className="absolute inset-0 bg-gradient-to-tr from-purple-600/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <span className="font-display font-bold text-xl text-white relative z-10">A</span>
-                </div>
-                <span className="font-display font-bold text-xl tracking-tight text-white">
-                  Aspiyas<span className="text-purple-500">.</span>
-                </span>
-              </>
+              <div className="h-10 w-24" aria-hidden />
             )}
           </LocalizedLink>
 
@@ -163,9 +155,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 {settings.logo_url ? (
                   <img src={settings.logo_url} alt="Aspiyas" className="h-10 w-auto object-contain" />
                 ) : (
-                  <span className="text-3xl font-display font-bold tracking-tighter text-white">
-                    Aspiyas<span className="text-purple-500">.</span>
-                  </span>
+                  <div className="h-10 w-24" aria-hidden />
                 )}
               </LocalizedLink>
               <p className="text-white/40 max-w-md text-lg font-light leading-relaxed mb-8">
