@@ -373,7 +373,7 @@ function SiteSettingsManager() {
 
   const handleSave = async () => {
     setSaving(true);
-    const keys = ['logo_url', 'site_title', 'contact_email', 'contact_phone', 'contact_address', 'social_instagram', 'social_linkedin', 'social_twitter', 'default_language'];
+    const keys = ['logo_url', 'site_title', 'favicon_url', 'contact_email', 'contact_phone', 'contact_address', 'social_instagram', 'social_linkedin', 'social_twitter', 'default_language'];
     for (const key of keys) {
       const value = settings[key] ?? '';
       await supabase.from('settings').upsert({ key, value, updated_at: new Date().toISOString() }, { onConflict: 'key' });
@@ -389,14 +389,17 @@ function SiteSettingsManager() {
     <div className="max-w-2xl space-y-6">
       <h2 className="text-2xl font-bold mb-8">Genel Ayarlar</h2>
 
+      <CollapsibleSection title="Sekme (Favicon & Başlık)" defaultOpen={true}>
+        <ImageField label="Favicon (sekme ikonu)" value={settings.favicon_url || ''} onChange={v => setSettings({...settings, favicon_url: v})} recommendedSize="32×32" />
+        <p className="text-xs text-white/50 mt-2 mb-4">Tarayıcı sekmesinde görünen ikon. Önerilen: 32×32 veya 64×64 PNG.</p>
+        <label className="block text-sm font-medium text-white/70 mb-2">Sekme Başlığı</label>
+        <input className={inputCls} value={settings.site_title || ''} onChange={e => setSettings({...settings, site_title: e.target.value})} placeholder="Aspiyas Teknoloji ve Ticaret A.Ş." />
+        <p className="text-xs text-white/50 mt-2">Tarayıcı sekmesinde görünen metin (sayfa başlıkları bunu genişletebilir).</p>
+      </CollapsibleSection>
+
       <CollapsibleSection title="Logo" defaultOpen={true}>
         <ImageField label="Logo görseli" value={settings.logo_url || ''} onChange={v => setSettings({...settings, logo_url: v})} recommendedSize="200×60" />
         <p className="text-xs text-white/50 mt-2">Boş bırakırsanız metin logosu kullanılır.</p>
-      </CollapsibleSection>
-
-      <CollapsibleSection title="Site Başlığı" defaultOpen={true}>
-        <label className="block text-sm font-medium text-white/70 mb-2">Site Başlığı</label>
-        <input className={inputCls} value={settings.site_title || ''} onChange={e => setSettings({...settings, site_title: e.target.value})} />
       </CollapsibleSection>
 
       <CollapsibleSection title="İletişim" defaultOpen={true}>

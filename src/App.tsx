@@ -18,6 +18,7 @@ import AppStudioPage from './pages/AppStudio';
 import React, { useEffect, useState } from 'react';
 import { supabase } from './lib/supabase';
 import { GtmLoader } from './components/GtmLoader';
+import { DocumentHead } from './components/DocumentHead';
 import { LanguageProvider } from './contexts/LanguageContext';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -45,6 +46,7 @@ export default function App() {
     <BrowserRouter>
       <LanguageProvider>
         <GtmLoader />
+        <DocumentHead />
         <Routes>
           <Route path="/" element={<RedirectToLang />} />
           <Route path="/login" element={<Login />} />

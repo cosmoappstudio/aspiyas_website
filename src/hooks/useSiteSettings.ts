@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase';
 export interface SiteSettings {
   logo_url: string;
   site_title: string;
+  favicon_url: string;
   contact_email: string;
   contact_phone: string;
   contact_address: string;
@@ -17,6 +18,7 @@ export interface SiteSettings {
 const defaults: SiteSettings = {
   logo_url: '',
   site_title: 'Aspiyas Teknoloji ve Ticaret A.Ş.',
+  favicon_url: '',
   contact_email: 'info@aspiyas.com',
   contact_phone: '+90 212 000 00 00',
   contact_address: 'Maslak, İstanbul',
