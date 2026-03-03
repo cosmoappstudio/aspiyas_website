@@ -1,28 +1,34 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { motion } from 'motion/react';
-import { Lock, User } from 'lucide-react';
+import { Lock, Mail } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 
 export default function Login() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
+    setLoading(true);
     try {
-      await axios.post('/api/auth/login', { username, password });
-      navigate('/admin');
+      const { error: err } = await supabase.auth.signInWithPassword({ email, password });
+      if (err) throw err;
+      navigate('/yonetimofisi');
     } catch (err) {
-      setError('Invalid credentials');
+      setError(err instanceof Error ? err.message : 'Giriş başarısız. Email ve şifreyi kontrol edin.');
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center p-6">
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         className="w-full max-w-md bg-zinc-900 border border-white/10 rounded-2xl p-8 shadow-2xl"
@@ -40,15 +46,16 @@ export default function Login() {
 
         <form onSubmit={handleLogin} className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-white/70 mb-2">Kullanıcı Adı</label>
+            <label className="block text-sm font-medium text-white/70 mb-2">Email</label>
             <div className="relative">
-              <User className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" size={18} />
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" size={18} />
               <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full bg-black/50 border border-white/10 rounded-lg py-3 pl-10 pr-4 text-white focus:outline-none focus:border-purple-500 transition-colors"
-                placeholder="admin"
+                placeholder="admin@aspiyas.com"
+                required
               />
             </div>
           </div>
@@ -63,15 +70,17 @@ export default function Login() {
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full bg-black/50 border border-white/10 rounded-lg py-3 pl-10 pr-4 text-white focus:outline-none focus:border-purple-500 transition-colors"
                 placeholder="••••••••"
+                required
               />
             </div>
           </div>
 
           <button
             type="submit"
-            className="w-full bg-white text-black font-bold py-3 rounded-lg hover:bg-gray-200 transition-colors"
+            disabled={loading}
+            className="w-full bg-white text-black font-bold py-3 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50"
           >
-            Giriş Yap
+            {loading ? 'Giriş yapılıyor...' : 'Giriş Yap'}
           </button>
         </form>
       </motion.div>

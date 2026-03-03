@@ -1,8 +1,41 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight, Sparkles, Play } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { LocalizedLink } from './LocalizedLink';
+import { supabase } from '../lib/supabase';
+import { useLanguage, pickLangContent } from '../hooks/useLanguage';
+
+interface HeroContent {
+  badge: string;
+  titleLine1: string;
+  titleLine2: string;
+  description: string;
+  ctaPrimary: string;
+  ctaSecondary: string;
+  scrollHint: string;
+}
+
+const DEFAULT: HeroContent = {
+  badge: 'Geleceği Şekillendiriyoruz',
+  titleLine1: 'Teknoloji Odaklı',
+  titleLine2: 'Yaratıcı Çözümler',
+  description: 'Yapay zeka odaklı medya ve teknoloji alanlarında yenilikçi ürünler üretiyoruz. Markalarınızı güçlendirerek dijital dönüşümde öncü rol oynuyoruz.',
+  ctaPrimary: 'Bize Ulaşın',
+  ctaSecondary: 'Tanıtım Filmi',
+  scrollHint: 'Kaydır',
+};
 
 export default function Hero() {
+  const lang = useLanguage();
+  const [content, setContent] = useState<HeroContent>(DEFAULT);
+
+  useEffect(() => {
+    supabase.from('site_sections').select('content').eq('key', 'home').single().then(({ data }) => {
+      if (data?.content) setContent(pickLangContent<HeroContent>(data.content, lang));
+    });
+  }, [lang]);
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Immersive Background */}
@@ -46,44 +79,43 @@ export default function Hero() {
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8 backdrop-blur-md shadow-[0_0_20px_-5px_rgba(139,92,246,0.3)]"
           >
             <Sparkles size={14} className="text-purple-400" />
-            <span className="text-xs font-medium tracking-widest uppercase text-white/90">Geleceği Şekillendiriyoruz</span>
+            <span className="text-xs font-medium tracking-widest uppercase text-white/90">{content.badge}</span>
           </motion.div>
           
           <h1 className="text-6xl md:text-8xl lg:text-9xl font-display font-bold tracking-tighter mb-8 leading-[0.9]">
             <span className="block bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/40 pb-2">
-              Teknoloji Odaklı
+              {content.titleLine1}
             </span>
             <span className="block bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/40 pb-4">
-              Yaratıcı Çözümler
+              {content.titleLine2}
             </span>
           </h1>
 
           <p className="text-lg md:text-2xl text-white/50 max-w-2xl mx-auto mb-12 font-light leading-relaxed">
-            Yapay zeka odaklı medya ve teknoloji alanlarında yenilikçi ürünler üretiyoruz. 
-            Markalarınızı güçlendirerek dijital dönüşümde öncü rol oynuyoruz.
+            {content.description}
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
+            <LocalizedLink
               to="/contact"
               className="group relative px-8 py-4 bg-white text-black rounded-full font-medium overflow-hidden w-full sm:w-auto"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-gray-200 to-white translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
               <span className="relative z-10 flex items-center justify-center gap-2">
-                Bize Ulaşın
+                {content.ctaPrimary}
                 <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </span>
-            </Link>
+            </LocalizedLink>
             
-            <Link
+            <LocalizedLink
               to="/services"
               className="group px-8 py-4 bg-white/5 text-white border border-white/10 rounded-full font-medium hover:bg-white/10 transition-all backdrop-blur-sm flex items-center justify-center gap-2 w-full sm:w-auto"
             >
               <span className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
                 <Play size={10} fill="currentColor" />
               </span>
-              Tanıtım Filmi
-            </Link>
+              {content.ctaSecondary}
+            </LocalizedLink>
           </div>
         </motion.div>
       </div>
@@ -95,7 +127,7 @@ export default function Hero() {
         transition={{ delay: 1.5, duration: 1 }}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
-        <span className="text-[10px] uppercase tracking-widest text-white/30">Kaydır</span>
+        <span className="text-[10px] uppercase tracking-widest text-white/30">{content.scrollHint}</span>
         <div className="w-[1px] h-12 bg-gradient-to-b from-transparent via-white/30 to-transparent"></div>
       </motion.div>
     </section>

@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { LocalizedLink } from '../components/LocalizedLink';
 import Layout from '../components/Layout';
+import { supabase } from '../lib/supabase';
 import Section from '../components/Section';
 import { Calendar, ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
 
 export default function BlogList() {
-  const [blogs, setBlogs] = useState<any[]>([]);
+  const [blogs, setBlogs] = useState<{ id: string; slug: string; title: string; excerpt: string | null; image_url: string | null; created_at: string }[]>([]);
 
   useEffect(() => {
-    axios.get('/api/blogs').then(res => setBlogs(res.data));
+    supabase.from('blogs').select('id, slug, title, excerpt, image_url, created_at').order('created_at', { ascending: false }).then(({ data }) => setBlogs(data ?? []));
   }, []);
 
   return (
@@ -52,7 +53,7 @@ export default function BlogList() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
             >
-              <Link to={`/blog/${blog.slug}`} className="group block h-full">
+              <LocalizedLink to={`/blog/${blog.slug}`} className="group block h-full">
                 <div className="bg-[#0A0A0A] border border-white/5 rounded-[2rem] overflow-hidden hover:border-purple-500/30 transition-all duration-500 h-full flex flex-col group-hover:translate-y-[-5px]">
                   {blog.image_url ? (
                     <div className="aspect-[16/10] overflow-hidden relative">
@@ -86,7 +87,7 @@ export default function BlogList() {
                     </div>
                   </div>
                 </div>
-              </Link>
+              </LocalizedLink>
             </motion.div>
           ))}
         </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import Layout from '../components/Layout';
+import { supabase } from '../lib/supabase';
 import Section from '../components/Section';
 import { motion } from 'motion/react';
 
@@ -11,12 +11,17 @@ export default function DynamicPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get(`/api/pages/${slug}`)
-      .then(res => {
-        setPage(res.data);
+    if (!slug) return;
+    (async () => {
+      try {
+        const { data } = await supabase.from('pages').select('*').eq('slug', slug).single();
+        setPage(data);
+      } catch {
+        // ignore
+      } finally {
         setLoading(false);
-      })
-      .catch(() => setLoading(false));
+      }
+    })();
   }, [slug]);
 
   if (loading) return <Layout><div className="pt-32 text-center text-white/50">Yükleniyor...</div></Layout>;
