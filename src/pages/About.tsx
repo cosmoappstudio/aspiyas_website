@@ -1,7 +1,8 @@
 import { useState, useEffect, Fragment } from 'react';
 import { motion } from 'motion/react';
 import Layout from '../components/Layout';
-import Section from '../components/Section';
+import { PageSection } from '../components/PageSection';
+import { PageHeader } from '../components/PageHeader';
 import { VisualPanel } from '../components/VisualPanel';
 import { Seo } from '../components/Seo';
 import { Link } from 'react-router-dom';
@@ -19,7 +20,12 @@ import {
   Sparkles,
 } from 'lucide-react';
 
-const ACCENTS = ['from-[#FF4D00]/25 to-transparent', 'from-purple-500/25 to-transparent', 'from-blue-500/25 to-transparent', 'from-emerald-500/25 to-transparent'];
+const ACCENTS = [
+  'from-[#FF4D00] to-[#FF0000]',
+  'from-[#5B21FF] to-[#22D3EE]',
+  'from-[#F97316] to-[#FACC15]',
+  'from-[#22C55E] to-[#0EA5E9]',
+];
 
 interface AboutContent {
   header: { tag: string; title: string; intro: string };
@@ -76,30 +82,16 @@ export default function AboutPage() {
         }}
       />
 
-      <Section className="pt-32 md:pt-40 pb-20 md:pb-28">
+      <PageSection className="pt-32 md:pt-40 pb-20 md:pb-28">
         <div className="max-w-5xl mx-auto">
-          <motion.header
-            className="mb-10 md:mb-14"
-            initial={{ opacity: 0, y: 32 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ type: 'spring', stiffness: 150, damping: 22 }}
-          >
-            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-[11px] font-semibold tracking-[0.24em] uppercase text-purple-300">
-              {header.tag}
-            </span>
-            <h1 className="mt-5 text-3xl md:text-5xl lg:text-6xl font-display font-bold leading-tight">
-              {header.title}
-            </h1>
-            <p className="mt-5 md:mt-6 text-sm md:text-lg text-white/60 max-w-3xl">
-              {header.intro}
-            </p>
-          </motion.header>
+          <PageHeader tag={header.tag} title={header.title} intro={header.intro} />
 
           <motion.div
             className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10 md:mb-12"
             initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15, type: 'spring', stiffness: 180, damping: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ delay: 0.1, type: 'spring', stiffness: 180, damping: 25 }}
           >
             <AboutStat icon={Building2} label={stats[0]?.label} value={stats[0]?.value} />
             <AboutStat icon={Globe2} label={stats[1]?.label} value={stats[1]?.value} />
@@ -108,9 +100,10 @@ export default function AboutPage() {
 
           <motion.div
             className="space-y-8 md:space-y-10"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ delay: 0.15, duration: 0.5 }}
           >
             <section aria-labelledby="about-vision" className="space-y-4 md:space-y-5">
               <h2 id="about-vision" className="text-2xl md:text-3xl font-display font-semibold">
@@ -126,7 +119,13 @@ export default function AboutPage() {
               </div>
             </section>
 
-            <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1.7fr)_minmax(0,1.3fr)] gap-8 md:gap-10">
+              <motion.div
+                className="grid grid-cols-1 md:grid-cols-[minmax(0,1.7fr)_minmax(0,1.3fr)] gap-8 md:gap-10"
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ type: 'spring', stiffness: 150, damping: 22 }}
+              >
               <VisualPanel
                 title={visualPanel.title}
                 subtitle={visualPanel.subtitle}
@@ -152,7 +151,7 @@ export default function AboutPage() {
                   ))}
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             <section aria-labelledby="about-ventures" className="space-y-4 md:space-y-5">
               <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
@@ -171,25 +170,33 @@ export default function AboutPage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {(ecosystem.ventures ?? []).map((item, i) => (
-                  <LocalizedLink
+                  <motion.div
                     key={item.href}
-                    to={item.href}
-                    className="group relative rounded-3xl border border-white/10 bg-[#050505] p-6 md:p-7 overflow-hidden hover:border-white/20 transition-colors"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.15 }}
+                    transition={{ delay: i * 0.08, type: 'spring', stiffness: 180, damping: 25 }}
                   >
-                    <div className={`absolute inset-0 bg-gradient-to-br ${ACCENTS[i % 4]} opacity-70`} />
-                    <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-25 mix-blend-overlay" />
+                  <LocalizedLink
+                    to={item.href}
+                    className="group relative rounded-3xl border border-white/10 p-6 md:p-7 overflow-hidden hover:border-white/20 transition-colors flex flex-col min-h-[160px]"
+                  >
+                    <div className={`absolute inset-0 opacity-50 md:opacity-60 bg-gradient-to-br ${ACCENTS[i % 4]} mix-blend-normal pointer-events-none`} />
+                    <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-30 mix-blend-overlay pointer-events-none" />
+                    <div className="absolute inset-0 bg-black/70 group-hover:bg-black/60 transition-colors pointer-events-none" />
                     <div className="relative z-10">
-                      <div className="flex items-start justify-between gap-4">
-                        <div>
+                      <div className="flex items-start justify-between gap-4 min-w-0">
+                        <div className="min-w-0 flex-1">
                           <h3 className="text-xl md:text-2xl font-display font-semibold">{item.name}</h3>
                           <p className="text-sm text-white/65 mt-2">{item.desc}</p>
                         </div>
-                        <div className="flex items-center justify-center w-9 h-9 rounded-full border border-white/25 bg-black/20 text-white/80 group-hover:bg-white group-hover:text-black group-hover:border-transparent transition-all">
+                        <div className="flex shrink-0 items-center justify-center w-9 h-9 rounded-full border border-white/20 bg-white/10 text-white group-hover:bg-white group-hover:text-black group-hover:border-transparent transition-all duration-200">
                           <ArrowUpRight size={18} />
                         </div>
                       </div>
                     </div>
                   </LocalizedLink>
+                  </motion.div>
                 ))}
               </div>
             </section>
@@ -234,7 +241,7 @@ export default function AboutPage() {
             </div>
           </motion.div>
         </div>
-      </Section>
+      </PageSection>
     </Layout>
   );
 }

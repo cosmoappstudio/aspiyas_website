@@ -1,28 +1,15 @@
 import Layout from '../components/Layout';
-import Section from '../components/Section';
+import { PageSection } from '../components/PageSection';
+import { PageHeader } from '../components/PageHeader';
 import { ArrowRight, Code2, Beaker, Layers3 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function AppStudioPage() {
   return (
     <Layout>
-      <Section className="pt-32 md:pt-40 pb-20 md:pb-28">
+      <PageSection className="pt-32 md:pt-40 pb-20 md:pb-28">
         <div className="max-w-5xl mx-auto">
-          <header className="mb-10 md:mb-14">
-            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-[11px] font-semibold tracking-[0.24em] uppercase text-purple-300">
-              ASP App Studio
-            </span>
-            <h1 className="mt-5 text-3xl md:text-5xl lg:text-6xl font-display font-bold leading-tight">
-              Deney odaklı dijital
-              <span className="block text-white/40">ürün stüdyosu</span>
-            </h1>
-            <p className="mt-5 md:mt-6 text-sm md:text-lg text-white/60 max-w-3xl">
-              ASP App Studio; web ve mobil platformlarda yeni dijital ürünler test eden, ölçen ve
-              ölçekleyen ürün stüdyomuzdur. Fikir doğrulamasından MVP’ye, oradan da growth aşamasına
-              kadar tüm süreci yönetiyoruz.
-            </p>
-          </header>
-
+          <PageHeader tag="ASP App Studio" title={<>{'Deney odaklı dijital '}<span className="block text-white/40">ürün stüdyosu</span></>} intro="ASP App Studio; web ve mobil platformlarda yeni dijital ürünler test eden, ölçen ve ölçekleyen ürün stüdyomuzdur. Fikir doğrulamasından MVP'ye, oradan da growth aşamasına kadar tüm süreci yönetiyoruz." />
           <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1.8fr)_minmax(0,1.4fr)] gap-8 md:gap-10">
             <section aria-labelledby="studio-model" className="space-y-6 md:space-y-7">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5">
@@ -51,7 +38,7 @@ export default function AppStudioPage() {
                   Ürün fikrinizi birlikte test edelim
                 </h2>
                 <p className="text-xs md:text-sm text-white/70 mb-4">
-                  Bir probl em alanınız veya ürün fikriniz varsa, 4–6 haftalık validasyon süreci
+                  Bir problem alanınız veya ürün fikriniz varsa, 4–6 haftalık validasyon süreci
                   planlayıp gerçek kullanıcı verisiyle test edebiliriz.
                 </p>
                 <Link
@@ -65,7 +52,7 @@ export default function AppStudioPage() {
             </aside>
           </div>
         </div>
-      </Section>
+      </PageSection>
     </Layout>
   );
 }

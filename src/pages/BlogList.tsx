@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { LocalizedLink } from '../components/LocalizedLink';
 import Layout from '../components/Layout';
 import { supabase } from '../lib/supabase';
-import Section from '../components/Section';
+import { PageSection } from '../components/PageSection';
+import { PageHeader } from '../components/PageHeader';
 import { Calendar, ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
 
@@ -16,44 +16,23 @@ export default function BlogList() {
 
   return (
     <Layout>
-      <Section className="pt-40 pb-20 relative overflow-hidden">
-        {/* Background Glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-purple-900/20 rounded-full blur-[120px] pointer-events-none" />
+      <PageSection className="pt-40 pb-20">
+        <div className="max-w-6xl mx-auto">
+          <PageHeader
+            tag="Blog & İçerik"
+            title="Son Yazılar"
+            intro="Teknoloji, yapay zeka ve dijital dönüşüm üzerine içgörülerimiz."
+            className="text-center mb-24 [&_p]:mx-auto"
+          />
 
-        <div className="text-center mb-24 relative z-10">
-          <motion.span 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ type: 'spring', stiffness: 200 }}
-            className="text-purple-400 text-xs font-bold tracking-[0.2em] uppercase mb-4 block"
-          >
-            Blog & İçerik
-          </motion.span>
-          <motion.h1 
-            initial={{ opacity: 0, y: 36 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ type: 'spring', stiffness: 150, damping: 22 }}
-            className="text-5xl md:text-7xl font-display font-bold mb-6"
-          >
-            Son Yazılar
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, type: 'spring', stiffness: 150 }}
-            className="text-white/50 text-xl max-w-2xl mx-auto font-light"
-          >
-            Teknoloji, yapay zeka ve dijital dönüşüm üzerine içgörülerimiz.
-          </motion.p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {blogs.map((blog, index) => (
             <motion.div
               key={blog.id}
               initial={{ opacity: 0, y: 32, scale: 0.97 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ delay: 0.2 + index * 0.08, type: 'spring', stiffness: 180, damping: 25 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ delay: index * 0.08, type: 'spring', stiffness: 180, damping: 25 }}
             >
               <LocalizedLink to={`/blog/${blog.slug}`} className="group block h-full">
                 <div className="bg-[#0A0A0A] border border-white/5 rounded-[2rem] overflow-hidden hover:border-purple-500/30 transition-all duration-500 h-full flex flex-col group-hover:translate-y-[-5px]">
@@ -93,7 +72,8 @@ export default function BlogList() {
             </motion.div>
           ))}
         </div>
-      </Section>
+        </div>
+      </PageSection>
     </Layout>
   );
 }

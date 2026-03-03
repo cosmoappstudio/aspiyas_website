@@ -1,7 +1,8 @@
 import { useState, useEffect, type FormEvent } from 'react';
 import { motion } from 'motion/react';
 import Layout from '../components/Layout';
-import Section from '../components/Section';
+import { PageSection } from '../components/PageSection';
+import { PageHeader } from '../components/PageHeader';
 import { Seo } from '../components/Seo';
 import { Mail, MapPin, Phone, ArrowRight, Send } from 'lucide-react';
 import { VisualPanel } from '../components/VisualPanel';
@@ -99,30 +100,16 @@ export default function ContactPage() {
         }}
       />
 
-      <Section className="pt-32 md:pt-40 pb-20 md:pb-28">
+      <PageSection className="pt-32 md:pt-40 pb-20 md:pb-28">
         <div className="max-w-5xl mx-auto">
-          <motion.header
-            className="mb-10 md:mb-14"
-            initial={{ opacity: 0, y: 32 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ type: 'spring', stiffness: 150, damping: 22 }}
-          >
-            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-[11px] font-semibold tracking-[0.24em] uppercase text-purple-300">
-              {content.badge}
-            </span>
-            <h1 className="mt-5 text-3xl md:text-5xl lg:text-6xl font-display font-bold leading-tight">
-              {content.title}
-            </h1>
-            <p className="mt-5 md:mt-6 text-sm md:text-lg text-white/60 max-w-3xl">
-              {content.description}
-            </p>
-          </motion.header>
+          <PageHeader tag={content.badge} title={content.title} intro={content.description} />
 
           <motion.div
             className="grid grid-cols-1 md:grid-cols-[minmax(0,1.7fr)_minmax(0,1.3fr)] gap-8 md:gap-10"
             initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15, type: 'spring', stiffness: 180, damping: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ delay: 0.1, type: 'spring', stiffness: 180, damping: 25 }}
           >
             <div className="space-y-5 md:space-y-6">
               <form onSubmit={handleSubmit} className="rounded-3xl border border-white/10 bg-white/5 p-6 md:p-8 space-y-4">
@@ -224,7 +211,7 @@ export default function ContactPage() {
             </div>
           </motion.div>
         </div>
-      </Section>
+      </PageSection>
     </Layout>
   );
 }

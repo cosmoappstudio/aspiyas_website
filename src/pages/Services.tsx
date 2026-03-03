@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
+import { motion } from 'motion/react';
 import Layout from '../components/Layout';
-import Section from '../components/Section';
+import { PageSection } from '../components/PageSection';
+import { PageHeader } from '../components/PageHeader';
 import { ArrowUpRight, CheckCircle2, Sparkles } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { LocalizedLink } from '../components/LocalizedLink';
 import { supabase } from '../lib/supabase';
 import { useLanguage, pickLangContent } from '../hooks/useLanguage';
@@ -44,28 +45,26 @@ export default function ServicesPage() {
 
   return (
     <Layout>
-      <Section className="pt-32 md:pt-40 pb-20 md:pb-28">
+      <PageSection className="pt-32 md:pt-40 pb-20 md:pb-28">
         <div className="max-w-5xl mx-auto">
-          <header className="mb-10 md:mb-14 text-center">
-            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-[11px] font-semibold tracking-[0.24em] uppercase text-purple-300">
-              {header.tag}
-            </span>
-            <h1 className="mt-5 text-3xl md:text-5xl lg:text-6xl font-display font-bold leading-tight">
-              {header.title}
-            </h1>
-            <p className="mt-5 md:mt-6 text-sm md:text-lg text-white/60 max-w-3xl mx-auto">
-              {header.intro}
-            </p>
-          </header>
+          <PageHeader tag={header.tag} title={header.title} intro={header.intro} className="text-center [&_p]:mx-auto" />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-7">
-            {services.map((service) => (
+            {services.map((service, index) => (
+              <motion.div
+                key={service.slug}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ delay: index * 0.08, type: 'spring', stiffness: 180, damping: 25 }}
+              >
               <LocalizedLink
                 key={service.slug}
                 to={service.slug}
-                className="group relative rounded-3xl border border-white/10 bg-[#050505] p-6 md:p-8 overflow-hidden hover:border-purple-500/40 transition-colors"
+                className="group block relative rounded-3xl border border-white/10 bg-[#050505] p-6 md:p-8 overflow-hidden hover:border-purple-500/40 transition-all duration-300 hover:shadow-[0_0_40px_-15px_rgba(139,92,246,0.3)]"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-purple-500/10 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="relative z-10">
                   <div className="flex justify-between items-start gap-4 mb-4 md:mb-5">
                     <h2 className="text-xl md:text-2xl font-display font-semibold group-hover:text-purple-300 transition-colors">
@@ -89,23 +88,40 @@ export default function ServicesPage() {
                   </div>
                 </div>
               </LocalizedLink>
+              </motion.div>
             ))}
           </div>
 
           {products.length > 0 && (
-            <section className="mt-12 md:mt-16 space-y-5 md:space-y-6">
-              <div className="flex items-center justify-center gap-2 text-xs text-white/50">
-                <Sparkles size={14} className="text-purple-300" />
-                <span className="uppercase tracking-[0.18em]">{productsTag}</span>
+            <motion.section
+              className="mt-16 md:mt-20 pt-12 md:pt-16 border-t border-white/5"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ type: 'spring', stiffness: 150, damping: 22 }}
+            >
+              <div className="mb-8 md:mb-10">
+                <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-[11px] font-semibold tracking-[0.24em] uppercase text-purple-300">
+                  <Sparkles size={12} />
+                  {productsTag}
+                </span>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-7">
-                {products.map((product) => (
+                {products.map((product, index) => (
+                  <motion.div
+                    key={product.slug}
+                    initial={{ opacity: 0, y: 24 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.15 }}
+                    transition={{ delay: index * 0.08, type: 'spring', stiffness: 180, damping: 25 }}
+                  >
                   <LocalizedLink
                     key={product.slug}
                     to={product.slug}
-                    className="group relative rounded-3xl border border-white/10 bg-[#050505] p-6 md:p-8 overflow-hidden hover:border-purple-500/40 transition-colors"
+                    className="group block relative rounded-3xl border border-white/10 bg-[#050505] p-6 md:p-8 overflow-hidden hover:border-purple-500/40 transition-all duration-300 hover:shadow-[0_0_40px_-15px_rgba(139,92,246,0.3)]"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#FF4D00]/15 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#FF4D00]/10 to-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#FF4D00]/10 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <div className="relative z-10">
                       <div className="flex justify-between items-start gap-4 mb-4 md:mb-5">
                         <h2 className="text-xl md:text-2xl font-display font-semibold group-hover:text-purple-300 transition-colors">
@@ -129,12 +145,13 @@ export default function ServicesPage() {
                       </div>
                     </div>
                   </LocalizedLink>
+                  </motion.div>
                 ))}
               </div>
-            </section>
+            </motion.section>
           )}
         </div>
-      </Section>
+      </PageSection>
     </Layout>
   );
 }

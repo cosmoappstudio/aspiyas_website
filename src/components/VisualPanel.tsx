@@ -1,4 +1,4 @@
-import type React from 'react';
+import { motion } from 'motion/react';
 
 interface VisualPanelProps {
   title: string;
@@ -9,7 +9,13 @@ interface VisualPanelProps {
 
 export function VisualPanel({ title, subtitle, imageUrl, alt }: VisualPanelProps) {
   return (
-    <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5">
+    <motion.div
+      className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ type: 'spring', stiffness: 150, damping: 22 }}
+    >
       <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 via-transparent to-blue-500/20 opacity-70" />
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-30 mix-blend-overlay" />
       <div className="relative z-10 flex flex-col h-full">
@@ -30,7 +36,7 @@ export function VisualPanel({ title, subtitle, imageUrl, alt }: VisualPanelProps
           />
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

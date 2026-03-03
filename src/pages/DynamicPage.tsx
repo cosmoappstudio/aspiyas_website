@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { supabase } from '../lib/supabase';
-import Section from '../components/Section';
+import { PageSection } from '../components/PageSection';
 import { motion } from 'motion/react';
 
 export default function DynamicPage() {
@@ -29,7 +29,7 @@ export default function DynamicPage() {
 
   return (
     <Layout>
-      <Section className="pt-40 pb-20">
+      <PageSection className="pt-40 pb-20">
         <div className="max-w-4xl mx-auto">
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
@@ -48,7 +48,7 @@ export default function DynamicPage() {
             <div dangerouslySetInnerHTML={{ __html: page.content }} />
           </motion.div>
         </div>
-      </Section>
+      </PageSection>
     </Layout>
   );
 }

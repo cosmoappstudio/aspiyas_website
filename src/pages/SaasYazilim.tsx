@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
+import { motion } from 'motion/react';
 import Layout from '../components/Layout';
-import Section from '../components/Section';
+import { PageSection } from '../components/PageSection';
+import { PageHeader } from '../components/PageHeader';
 import { CheckCircle2, Server, Shield, Cable } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { LocalizedLink } from '../components/LocalizedLink';
 import { VisualPanel } from '../components/VisualPanel';
 import { supabase } from '../lib/supabase';
@@ -37,20 +38,13 @@ export default function SaasYazilimPage() {
 
   return (
     <Layout>
-      <Section className="pt-32 md:pt-40 pb-20 md:pb-28">
+      <PageSection className="pt-32 md:pt-40 pb-20 md:pb-28">
         <div className="max-w-5xl mx-auto">
-          <header className="mb-10 md:mb-14">
-            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-[11px] font-semibold tracking-[0.24em] uppercase text-purple-300">
-              {header.tag}
-            </span>
-            <h1 className="mt-5 text-3xl md:text-5xl lg:text-6xl font-display font-bold leading-tight">
-              {header.title}
-              {header.titleSubline && <span className="block text-white/40">{header.titleSubline}</span>}
-            </h1>
-            <p className="mt-5 md:mt-6 text-sm md:text-lg text-white/60 max-w-3xl">
-              {header.intro}
-            </p>
-          </header>
+          <PageHeader
+            tag={header.tag}
+            title={<>{header.title}{header.titleSubline && <span className="block text-white/40">{header.titleSubline}</span>}</>}
+            intro={header.intro}
+          />
 
           <div className="space-y-8 md:space-y-10">
             <section aria-labelledby="saas-ne-sunuyor" className="space-y-4 md:space-y-5">
@@ -69,11 +63,25 @@ export default function SaasYazilimPage() {
             </section>
 
             {stats?.length > 0 && (
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <SaasStat icon={Server} label={stats[0]?.label} value={stats[0]?.value} />
-                <SaasStat icon={Shield} label={stats[1]?.label} value={stats[1]?.value} />
-                <SaasStat icon={Cable} label={stats[2]?.label} value={stats[2]?.value} />
-              </div>
+              <motion.div
+                className="grid grid-cols-1 sm:grid-cols-3 gap-4"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ type: 'spring', stiffness: 180, damping: 25 }}
+              >
+                {stats.map((s, i) => (
+                  <motion.div
+                    key={s?.label}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.06, type: 'spring', stiffness: 200, damping: 25 }}
+                  >
+                    <SaasStat icon={[Server, Shield, Cable][i]} label={s?.label} value={s?.value} />
+                  </motion.div>
+                ))}
+              </motion.div>
             )}
 
             {visualPanel?.imageUrl && (
@@ -101,7 +109,7 @@ export default function SaasYazilimPage() {
             )}
           </div>
         </div>
-      </Section>
+      </PageSection>
     </Layout>
   );
 }

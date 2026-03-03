@@ -1,6 +1,7 @@
 import { useState, useEffect, Fragment } from 'react';
 import Layout from '../components/Layout';
-import Section from '../components/Section';
+import { PageSection } from '../components/PageSection';
+import { PageHeader } from '../components/PageHeader';
 import { CheckCircle2, BarChart3, Target, Globe2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { LocalizedLink } from '../components/LocalizedLink';
@@ -36,20 +37,9 @@ export default function DijitalPazarlamaPage() {
 
   return (
     <Layout>
-      <Section className="pt-32 md:pt-40 pb-20 md:pb-28">
+      <PageSection className="pt-32 md:pt-40 pb-20 md:pb-28">
         <div className="max-w-5xl mx-auto">
-          <header className="mb-10 md:mb-14">
-            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-[11px] font-semibold tracking-[0.24em] uppercase text-purple-300">
-              {header.tag}
-            </span>
-            <h1 className="mt-5 text-3xl md:text-5xl lg:text-6xl font-display font-bold leading-tight">
-              {header.title}
-              {header.titleSubline && <span className="block text-white/40">{header.titleSubline}</span>}
-            </h1>
-            <p className="mt-5 md:mt-6 text-sm md:text-lg text-white/60 max-w-3xl">
-              {header.intro}
-            </p>
-          </header>
+          <PageHeader tag={header.tag} title={<>{header.title}{header.titleSubline && <span className="block text-white/40">{header.titleSubline}</span>}</>} intro={header.intro} />
 
           <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1.8fr)_minmax(0,1.4fr)] gap-8 md:gap-10">
             <section aria-labelledby="dijital-hizmetler" className="space-y-6 md:space-y-7">
@@ -98,7 +88,7 @@ export default function DijitalPazarlamaPage() {
             </aside>
           </div>
         </div>
-      </Section>
+      </PageSection>
     </Layout>
   );
 }

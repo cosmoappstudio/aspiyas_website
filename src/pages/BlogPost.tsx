@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { supabase } from '../lib/supabase';
-import Section from '../components/Section';
+import { PageSection } from '../components/PageSection';
 import { Calendar, User, Clock } from 'lucide-react';
 import { motion } from 'motion/react';
 
@@ -79,13 +79,13 @@ export default function BlogPost() {
           </div>
         </div>
 
-        <Section className="bg-[#050505]">
+        <PageSection className="bg-[#050505]">
           <div className="max-w-3xl mx-auto">
             <div className="prose prose-invert prose-lg prose-headings:font-display prose-headings:font-bold prose-p:text-white/70 prose-p:font-light prose-p:leading-relaxed prose-a:text-purple-400 prose-img:rounded-3xl prose-strong:text-white">
               <div dangerouslySetInnerHTML={{ __html: blog.content }} />
             </div>
           </div>
-        </Section>
+        </PageSection>
       </article>
     </Layout>
   );

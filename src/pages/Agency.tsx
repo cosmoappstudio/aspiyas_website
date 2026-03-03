@@ -1,27 +1,15 @@
 import Layout from '../components/Layout';
-import Section from '../components/Section';
+import { PageSection } from '../components/PageSection';
+import { PageHeader } from '../components/PageHeader';
 import { ArrowRight, PenTool, Megaphone, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function AgencyPage() {
   return (
     <Layout>
-      <Section className="pt-32 md:pt-40 pb-20 md:pb-28">
+      <PageSection className="pt-32 md:pt-40 pb-20 md:pb-28">
         <div className="max-w-5xl mx-auto">
-          <header className="mb-10 md:mb-14">
-            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-[11px] font-semibold tracking-[0.24em] uppercase text-purple-300">
-              ASP Agency
-            </span>
-            <h1 className="mt-5 text-3xl md:text-5xl lg:text-6xl font-display font-bold leading-tight">
-              Kreatif ajans ve
-              <span className="block text-white/40">performans odaklı pazarlama ekibi</span>
-            </h1>
-            <p className="mt-5 md:mt-6 text-sm md:text-lg text-white/60 max-w-3xl">
-              ASP Agency, markanızın iletişim stratejisini; kreatif fikir, içerik üretimi ve performans
-              pazarlama birleşiminde kurgular. İstanbul merkezli ama Türkiye ve global markalarla
-              çalışıyoruz.
-            </p>
-          </header>
+          <PageHeader tag="ASP Agency" title={<>{'Kreatif ajans ve '}<span className="block text-white/40">performans odaklı pazarlama ekibi</span></>} intro="ASP Agency, markanızın iletişim stratejisini; kreatif fikir, içerik üretimi ve performans pazarlama birleşiminde kurgular. İstanbul merkezli ama Türkiye ve global markalarla çalışıyoruz." />
 
           <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1.8fr)_minmax(0,1.4fr)] gap-8 md:gap-10">
             <section aria-labelledby="agency-hizmetler" className="space-y-6 md:space-y-7">
@@ -66,7 +54,7 @@ export default function AgencyPage() {
             </aside>
           </div>
         </div>
-      </Section>
+      </PageSection>
     </Layout>
   );
 }
